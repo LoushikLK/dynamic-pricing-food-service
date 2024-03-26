@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ItemType {
+  PERISHABLE
+  NONPERISHABLE
+}
+
+model Organization {
+  id      Int       @id @default(autoincrement())
+  name    String    @unique
+  Pricing Pricing[]
+}
+
+model Item {
+  id          Int       @id @default(autoincrement())
+  type        ItemType
+  description String?
+  Pricing     Pricing[]
+}
+
+model Pricing {
+  id               Int          @id @default(autoincrement())
+  organizationId   Int
+  organization     Organization @relation(fields: [organizationId], references: [id])
+  itemId           Int
+  item             Item         @relation(fields: [itemId], references: [id])
+  zone             String
+  baseDistanceInKM Int //in meter 
+  pricePerKM       Int //in cents
+  fixPrice         Int //minimum fix price in cents
+}
