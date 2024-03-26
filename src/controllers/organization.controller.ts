@@ -46,9 +46,9 @@ export const OrganizationController: {
   },
   delete: async (req, res, next) => {
     try {
-      const { id } = req.body;
+      const { id } = req.params;
 
-      await deleteOrganization({ id });
+      await deleteOrganization({ id: +id });
 
       res.status(200).json({
         msg: "Organization deleted",

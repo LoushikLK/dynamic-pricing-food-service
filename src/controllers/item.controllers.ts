@@ -47,9 +47,9 @@ export const ItemController: {
   },
   delete: async (req, res, next) => {
     try {
-      const { id } = req.body;
+      const { id } = req.params;
 
-      await deleteItem({ id });
+      await deleteItem({ id: +id });
 
       res.status(200).json({
         msg: "Item deleted",
