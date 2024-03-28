@@ -46,7 +46,7 @@ router.delete(
 );
 //get dynamic pricing
 router.post(
-  "/pricing",
+  "/calculate",
   PricingValidation.dynamicPricing,
   formatValidationErrors,
   PricingController.dynamicPricing

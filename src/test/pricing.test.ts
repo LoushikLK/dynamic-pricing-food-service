@@ -74,14 +74,14 @@ describe("Pricing Controller", () => {
       true
     );
   });
-  it("should calculate the price dynamically and return a total POST  /api/v1/price/pricing", async () => {
+  it("should calculate the price dynamically and return a total POST  /api/v1/price/calculate", async () => {
     let data = {
       zone: "test updated",
       organizationId: 3,
       itemType: ItemType.NONPERISHABLE,
       totalDistance: 50,
     };
-    const response = await request.post("/api/v1/price/pricing").send(data);
+    const response = await request.post("/api/v1/price/calculate").send(data);
     expect(response.status).toBe(200);
     expect(response.body.success).toBe(true);
     expect(response.body.data.data.totalPrice).toBe(430);

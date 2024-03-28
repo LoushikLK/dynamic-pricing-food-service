@@ -31,7 +31,7 @@ const swaggerOptions = {
       },
     },
   },
-  apis: ["./src/routes/*.ts", "./build/routes/*.js"],
+  apis: ["./src/docs/*.ts", "./build/docs/*.js"],
 
   security: [
     {
