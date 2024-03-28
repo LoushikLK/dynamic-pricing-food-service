@@ -7,7 +7,7 @@ const request = supertest(app);
 
 let id: number;
 
-describe("Express Server", () => {
+describe("Item Controller", () => {
   beforeAll(async () => {
     await prisma.$connect();
   });

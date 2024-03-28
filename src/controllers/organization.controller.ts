@@ -18,11 +18,12 @@ export const OrganizationController: {
     try {
       const { name } = req.body;
 
-      await createOrganization({ name });
+      const orgId = await createOrganization({ name });
 
       res.status(201).json({
         msg: "Organization created",
         success: true,
+        data: { data: { id: orgId } },
       });
     } catch (error) {
       next(error);

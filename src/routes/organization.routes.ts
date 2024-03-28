@@ -18,7 +18,7 @@ router.get(
   "/:id",
   OrganizationValidation.getById,
   formatValidationErrors,
-  OrganizationController.update
+  OrganizationController.getById
 );
 
 //get all organization

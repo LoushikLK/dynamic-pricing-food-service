@@ -18,7 +18,7 @@ router.get(
   "/:id",
   PricingValidation.getById,
   formatValidationErrors,
-  PricingController.update
+  PricingController.getById
 );
 
 //get all pricing
@@ -45,7 +45,7 @@ router.delete(
   PricingController.delete
 );
 //get dynamic pricing
-router.get(
+router.post(
   "/pricing",
   PricingValidation.dynamicPricing,
   formatValidationErrors,

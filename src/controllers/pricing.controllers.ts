@@ -28,7 +28,7 @@ export const PricingController: {
         fixPrice,
       } = req.body;
 
-      await createPricing({
+      const pricingId = await createPricing({
         organizationId,
         itemId,
         baseDistanceInKM,
@@ -40,6 +40,7 @@ export const PricingController: {
       res.status(201).json({
         msg: "Pricing created",
         success: true,
+        data: { data: { id: pricingId } },
       });
     } catch (error) {
       next(error);

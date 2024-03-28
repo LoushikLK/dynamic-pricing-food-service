@@ -7,13 +7,14 @@ import { findOrganizationById } from "./organization.services";
 /**
  * Create pricing for an item based on organization, zone, and distance.
  *
- * @param {number} organizationId - The ID of the organization.
- * @param {number} itemId - The ID of the item.
- * @param {string} zone - The pricing zone.
- * @param {number} baseDistanceInKM - The base distance in kilometers.
- * @param {number} pricePerKM - The price per kilometer.
- * @param {number} fixPrice - The fixed price.
- * @return {Promise<void>} A Promise that resolves when pricing is successfully created.
+ * @param {Object} params - The parameters for creating the pricing.
+ * @param {number} params.organizationId - The ID of the organization.
+ * @param {number} params.itemId - The ID of the item.
+ * @param {string} params.zone - The pricing zone.
+ * @param {number} params.baseDistanceInKM - The base distance in kilometers.
+ * @param {number} params.pricePerKM - The price per kilometer.
+ * @param {number} params.fixPrice - The fixed price.
+ * @return {Promise<number>} A Promise that resolves when pricing is successfully created.
  */
 export async function createPricing({
   organizationId,
@@ -29,7 +30,7 @@ export async function createPricing({
   baseDistanceInKM: number;
   pricePerKM: number;
   fixPrice: number;
-}): Promise<void> {
+}): Promise<number> {
   try {
     //check if organization and item not exist throws error
 
@@ -41,7 +42,7 @@ export async function createPricing({
     if (organization.status === "rejected") throw organization.reason;
     if (item.status === "rejected") throw item.reason;
 
-    await prisma.pricing.create({
+    const pricing = await prisma.pricing.create({
       data: {
         organizationId,
         itemId,
@@ -50,7 +51,12 @@ export async function createPricing({
         zone,
         fixPrice,
       },
+      select: {
+        id: true,
+      },
     });
+
+    return pricing.id;
   } catch (error) {
     throw error;
   }
@@ -185,6 +191,14 @@ export async function getDynamicPricing({
     //find the pricing details
 
     const pricing = await prisma.pricing.findFirst({
+      include: {
+        item: {
+          select: {
+            type: true,
+            description: true,
+          },
+        },
+      },
       where: {
         zone,
         organizationId,

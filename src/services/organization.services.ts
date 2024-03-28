@@ -6,24 +6,29 @@ import { prisma } from "../config";
  * Function to create a new organization if it does not already exist.
  *
  * @param {string} name - The name of the organization to create.
- * @return {Promise<void>} Promise that resolves when the organization is successfully created.
+ * @return {Promise<number>} Promise that resolves when the organization is successfully created.
  */
 export async function createOrganization({
   name,
 }: {
   name: string;
-}): Promise<void> {
+}): Promise<number> {
   try {
     //check if organization already exist
 
     const organization = await findOrganizationByName({ name });
     if (organization) throw new BadRequest("Organization already exist!");
 
-    await prisma.organization.create({
+    const newOrg = await prisma.organization.create({
       data: {
         name,
       },
+      select: {
+        id: true,
+      },
     });
+
+    return newOrg.id;
   } catch (error) {
     throw error;
   }
@@ -41,7 +46,7 @@ export async function findOrganizationByName({
   name,
 }: {
   name: string;
-}): Promise<object> {
+}): Promise<object | null> {
   try {
     const organization = await prisma.organization.findUnique({
       where: {
@@ -64,8 +69,6 @@ export async function findOrganizationByName({
         },
       },
     });
-
-    if (!organization) throw new BadRequest("Organization not found!");
 
     return organization;
   } catch (error) {
