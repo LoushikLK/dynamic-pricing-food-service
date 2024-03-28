@@ -1,7 +1,7 @@
 import { ItemType } from "@prisma/client";
 import supertest from "supertest";
-import { prisma } from "../src/config";
-import server, { app } from "../src/server";
+import { prisma } from "../config";
+import server, { app } from "../server";
 
 const request = supertest(app);
 
