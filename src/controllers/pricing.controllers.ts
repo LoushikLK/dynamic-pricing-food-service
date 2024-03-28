@@ -4,6 +4,7 @@ import {
   deletePricing,
   findPricingById,
   getAllPricing,
+  getDynamicPricing,
   updatePricing,
 } from "../services/price.services";
 import { RequestHandler } from "../types";
@@ -14,6 +15,7 @@ export const PricingController: {
   delete: RequestHandler;
   getById: RequestHandler;
   getAll: RequestHandler;
+  dynamicPricing: RequestHandler;
 } = {
   create: async (req, res, next) => {
     try {
@@ -135,6 +137,30 @@ export const PricingController: {
           total,
           perPage: perPage ? +perPage : 10,
           pageNo: pageNo ? +pageNo : 1,
+        },
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+  dynamicPricing: async (req, res, next) => {
+    try {
+      const { zone, organizationId, itemType, totalDistance } = req.body;
+
+      const totalPrice = await getDynamicPricing({
+        zone,
+        organizationId,
+        itemType,
+        totalDistance,
+      });
+
+      res.status(200).json({
+        msg: "Pricing calculated",
+        success: true,
+        data: {
+          data: {
+            totalPrice,
+          },
         },
       });
     } catch (error) {

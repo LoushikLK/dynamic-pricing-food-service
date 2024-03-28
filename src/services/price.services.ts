@@ -1,5 +1,5 @@
 import { ItemType, Prisma } from "@prisma/client";
-import { NotFound } from "http-errors";
+import { BadRequest, NotFound } from "http-errors";
 import { prisma } from "../config";
 import { findItemById } from "./item.services";
 import { findOrganizationById } from "./organization.services";
@@ -166,6 +166,49 @@ export async function getAllPricing({
     ]);
 
     return { data: pricing, total };
+  } catch (error) {
+    throw error;
+  }
+}
+export async function getDynamicPricing({
+  zone,
+  organizationId,
+  itemType,
+  totalDistance,
+}: {
+  zone: string;
+  organizationId: number;
+  totalDistance: number;
+  itemType?: ItemType;
+}): Promise<number> {
+  try {
+    //find the pricing details
+
+    const pricing = await prisma.pricing.findFirst({
+      where: {
+        zone,
+        organizationId,
+        item: {
+          type: itemType,
+        },
+      },
+    });
+
+    if (!pricing)
+      throw new BadRequest("Pricing could not be calculated! Check your input");
+
+    const { pricePerKM, baseDistanceInKM, fixPrice } = pricing;
+
+    //calculate the total price based on the distance
+    let totalPrice = 0;
+
+    if (totalDistance <= baseDistanceInKM) {
+      totalPrice = fixPrice;
+    } else {
+      totalPrice = fixPrice + (totalDistance - baseDistanceInKM) * pricePerKM;
+    }
+
+    return totalPrice;
   } catch (error) {
     throw error;
   }

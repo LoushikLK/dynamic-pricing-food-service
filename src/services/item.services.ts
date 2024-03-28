@@ -17,19 +17,43 @@ export async function createItem({
 }: {
   type: ItemType;
   description?: string;
-}): Promise<void> {
+}): Promise<number> {
   try {
     //check if item already exist
 
-    const item = await findItemByType({ type });
+    const item = await prisma.item.findUnique({
+      where: {
+        type,
+      },
+      include: {
+        Pricing: {
+          select: {
+            zone: true,
+            pricePerKM: true,
+            baseDistanceInKM: true,
+            fixPrice: true,
+            organization: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+      },
+    });
     if (item) throw new BadRequest("Item already exist!");
 
-    await prisma.item.create({
+    let createdItem = await prisma.item.create({
       data: {
         type,
         description,
       },
+      select: {
+        id: true,
+      },
     });
+
+    return createdItem.id;
   } catch (error) {
     throw error;
   }
@@ -220,12 +244,12 @@ export async function updateItem({
   description,
 }: {
   id: number;
-  type: ItemType;
+  type?: ItemType;
   description?: string;
 }): Promise<void> {
   try {
     //check if item with the current type already exist
-    const item = await findItemByType({ type });
+    const item = type && (await findItemByType({ type }));
 
     if (item) throw new BadRequest("Item already exist!");
 

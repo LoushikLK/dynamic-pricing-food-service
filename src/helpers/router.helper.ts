@@ -9,17 +9,15 @@ const routerHandler = (app: Application) => {
   allFolders.forEach((folder) => {
     //if route file present then import it
     if (
-      existsSync(path.join(__dirname, "..", "routes", folder, "routes.ts")) ||
-      existsSync(path.join(__dirname, "..", "routes", folder, "routes.js"))
+      existsSync(path.join(__dirname, "..", "routes", folder)) ||
+      existsSync(path.join(__dirname, "..", "routes", folder))
     ) {
-      const router = require(path.join(
-        __dirname,
-        "..",
-        "routes",
-        folder,
-        "routes"
-      ));
-      app.use("/api/v1/" + folder, new router.default().router);
+      const router = require(path.join(__dirname, "..", "routes/", folder));
+
+      app.use(
+        "/api/v1/" + folder?.split(".")?.[0]?.toLowerCase(),
+        router.default
+      );
     }
   });
 };

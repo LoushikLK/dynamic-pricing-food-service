@@ -96,10 +96,36 @@ const getAll: ValidationChain[] = [
     ),
 ];
 
+const dynamicPricing: ValidationChain[] = [
+  body("zone").notEmpty().withMessage("zone is required"),
+  body("organizationId")
+    .notEmpty()
+    .withMessage("organizationId is required")
+    .isNumeric()
+    .withMessage("organizationId is not valid")
+    .toInt(),
+  body("totalDistance")
+    .notEmpty()
+    .withMessage("totalDistance is required")
+    .isNumeric()
+    .withMessage("totalDistance is not valid")
+    .toInt(),
+  body("itemType")
+    .notEmpty()
+    .withMessage("itemType is required")
+    .isString()
+    .withMessage("itemType must be string")
+    .isIn(Object.values(ItemType))
+    .withMessage(
+      "itemType must be one of these values: " + Object.values(ItemType)
+    ),
+];
+
 export const PricingValidation = {
   create,
   update,
   deleteOrg,
   getById,
   getAll,
+  dynamicPricing,
 };

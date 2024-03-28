@@ -5,7 +5,7 @@ import { PricingValidation } from "../validations/price.validations";
 
 const router = express.Router();
 
-//create organization
+//create pricing
 router.post(
   "/",
   PricingValidation.create,
@@ -13,7 +13,7 @@ router.post(
   PricingController.create
 );
 
-//get organization by id
+//get pricing by id
 router.get(
   "/:id",
   PricingValidation.getById,
@@ -21,7 +21,7 @@ router.get(
   PricingController.update
 );
 
-//get all organization
+//get all pricing
 router.get(
   "/",
   PricingValidation.getAll,
@@ -29,7 +29,7 @@ router.get(
   PricingController.getAll
 );
 
-//update organization by id
+//update pricing by id
 router.patch(
   "/:id",
   PricingValidation.update,
@@ -37,12 +37,19 @@ router.patch(
   PricingController.update
 );
 
-//delete organization by id
+//delete pricing by id
 router.delete(
   "/:id",
   PricingValidation.deleteOrg,
   formatValidationErrors,
   PricingController.delete
+);
+//get dynamic pricing
+router.get(
+  "/pricing",
+  PricingValidation.dynamicPricing,
+  formatValidationErrors,
+  PricingController.dynamicPricing
 );
 
 export default router;

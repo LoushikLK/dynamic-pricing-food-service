@@ -19,11 +19,16 @@ export const ItemController: {
     try {
       const { type, description } = req.body;
 
-      await createItem({ type, description });
+      let itemId = await createItem({ type, description });
 
       res.status(201).json({
         msg: "Item created",
         success: true,
+        data: {
+          data: {
+            id: itemId,
+          },
+        },
       });
     } catch (error) {
       next(error);

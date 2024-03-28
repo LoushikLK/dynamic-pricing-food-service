@@ -9,7 +9,12 @@ const create: ValidationChain[] = [
     .withMessage("description must be string"),
 ];
 const update: ValidationChain[] = [
-  body("type").notEmpty().withMessage("type is required"),
+  body("type")
+    .optional()
+    .isIn(Object.values(ItemType))
+    .withMessage(
+      "type must be one of these values: " + Object.values(ItemType)
+    ),
   param("id")
     .notEmpty()
     .withMessage("id is required")

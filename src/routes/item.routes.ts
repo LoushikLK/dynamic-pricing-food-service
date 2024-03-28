@@ -18,7 +18,7 @@ router.get(
   "/:id",
   ItemValidation.getById,
   formatValidationErrors,
-  ItemController.update
+  ItemController.getById
 );
 
 //get all item
