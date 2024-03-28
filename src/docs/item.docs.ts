@@ -24,7 +24,7 @@ export {};
  *                 type: string
  *                 description: Optional description of the item
  *     responses:
- *       200:
+ *       201:
  *         description: OK
  *         content:
  *           application/json:

@@ -35,7 +35,7 @@ export {};
  *                 type: integer
  *                 description: The minimum fix price in cents
  *     responses:
- *       200:
+ *       201:
  *         description: OK
  *         content:
  *           application/json:

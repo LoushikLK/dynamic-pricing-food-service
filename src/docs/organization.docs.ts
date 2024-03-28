@@ -20,7 +20,7 @@ export {};
  *                 type: string
  *                 description: Name of the organization (required)
  *     responses:
- *       200:
+ *       201:
  *         description: OK
  *         content:
  *           application/json:
