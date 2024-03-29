@@ -12,11 +12,11 @@ const create: ValidationChain[] = [
     .withMessage("itemId is required")
     .isNumeric()
     .withMessage("itemId must be numeric"),
-  body("baseDistanceInKM")
+  body("baseDistance")
     .notEmpty()
-    .withMessage("baseDistanceInKM is required")
+    .withMessage("baseDistance is required")
     .isNumeric()
-    .withMessage("baseDistanceInKM must be numeric"),
+    .withMessage("baseDistance must be numeric"),
   body("pricePerKM")
     .notEmpty()
     .withMessage("pricePerKM is required")
@@ -39,10 +39,10 @@ const update: ValidationChain[] = [
     .isNumeric()
     .withMessage("organizationId must be numeric"),
   body("itemId").optional().isNumeric().withMessage("itemId must be numeric"),
-  body("baseDistanceInKM")
+  body("baseDistance")
     .optional()
     .isNumeric()
-    .withMessage("baseDistanceInKM must be numeric"),
+    .withMessage("baseDistance must be numeric"),
   body("pricePerKM")
     .optional()
     .isNumeric()

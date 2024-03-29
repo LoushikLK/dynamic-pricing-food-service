@@ -22,7 +22,7 @@ export const PricingController: {
       const {
         organizationId,
         itemId,
-        baseDistanceInKM,
+        baseDistance,
         pricePerKM,
         zone,
         fixPrice,
@@ -31,7 +31,7 @@ export const PricingController: {
       const pricingId = await createPricing({
         organizationId,
         itemId,
-        baseDistanceInKM,
+        baseDistance,
         pricePerKM,
         zone,
         fixPrice,
@@ -53,7 +53,7 @@ export const PricingController: {
       const {
         organizationId,
         itemId,
-        baseDistanceInKM,
+        baseDistance,
         pricePerKM,
         zone,
         fixPrice,
@@ -62,7 +62,7 @@ export const PricingController: {
       await updatePricing({
         organizationId,
         itemId,
-        baseDistanceInKM,
+        baseDistance,
         pricePerKM,
         zone,
         fixPrice,

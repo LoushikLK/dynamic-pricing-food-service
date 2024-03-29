@@ -25,7 +25,7 @@ export {};
  *               zone:
  *                 type: string
  *                 description: The zone for the price
- *               baseDistanceInKM:
+ *               baseDistance:
  *                 type: integer
  *                 description: The base distance in kilometers
  *               pricePerKM:
@@ -271,7 +271,7 @@ export {};
  *               itemId:
  *                 type: integer
  *                 description: The ID of the item
- *               baseDistanceInKM:
+ *               baseDistance:
  *                 type: integer
  *                 description: The base distance in kilometers
  *               pricePerKM:

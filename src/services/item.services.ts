@@ -30,7 +30,7 @@ export async function createItem({
           select: {
             zone: true,
             pricePerKM: true,
-            baseDistanceInKM: true,
+            baseDistance: true,
             fixPrice: true,
             organization: {
               select: {
@@ -82,7 +82,7 @@ export async function findItemByType({
           select: {
             zone: true,
             pricePerKM: true,
-            baseDistanceInKM: true,
+            baseDistance: true,
             fixPrice: true,
             organization: {
               select: {
@@ -120,7 +120,7 @@ export async function findItemById(id: number): Promise<object> {
           select: {
             zone: true,
             pricePerKM: true,
-            baseDistanceInKM: true,
+            baseDistance: true,
             fixPrice: true,
             organization: {
               select: {
@@ -186,7 +186,7 @@ export async function getItems({
             select: {
               zone: true,
               pricePerKM: true,
-              baseDistanceInKM: true,
+              baseDistance: true,
               fixPrice: true,
               organization: {
                 select: {

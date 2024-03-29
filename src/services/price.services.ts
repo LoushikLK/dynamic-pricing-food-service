@@ -11,7 +11,7 @@ import { findOrganizationById } from "./organization.services";
  * @param {number} params.organizationId - The ID of the organization.
  * @param {number} params.itemId - The ID of the item.
  * @param {string} params.zone - The pricing zone.
- * @param {number} params.baseDistanceInKM - The base distance in kilometers.
+ * @param {number} params.baseDistance - The base distance in kilometers.
  * @param {number} params.pricePerKM - The price per kilometer.
  * @param {number} params.fixPrice - The fixed price.
  * @return {Promise<number>} A Promise that resolves when pricing is successfully created.
@@ -19,7 +19,7 @@ import { findOrganizationById } from "./organization.services";
 export async function createPricing({
   organizationId,
   itemId,
-  baseDistanceInKM,
+  baseDistance,
   pricePerKM,
   zone,
   fixPrice,
@@ -27,7 +27,7 @@ export async function createPricing({
   organizationId: number;
   itemId: number;
   zone: string;
-  baseDistanceInKM: number;
+  baseDistance: number;
   pricePerKM: number;
   fixPrice: number;
 }): Promise<number> {
@@ -46,7 +46,7 @@ export async function createPricing({
       data: {
         organizationId,
         itemId,
-        baseDistanceInKM,
+        baseDistance,
         pricePerKM,
         zone,
         fixPrice,
@@ -211,15 +211,16 @@ export async function getDynamicPricing({
     if (!pricing)
       throw new BadRequest("Pricing could not be calculated! Check your input");
 
-    const { pricePerKM, baseDistanceInKM, fixPrice } = pricing;
+    const { pricePerKM, baseDistance, fixPrice } = pricing;
 
     //calculate the total price based on the distance
     let totalPrice = 0;
 
-    if (totalDistance <= baseDistanceInKM) {
+    if (totalDistance <= baseDistance) {
       totalPrice = fixPrice;
     } else {
-      totalPrice = fixPrice + (totalDistance - baseDistanceInKM) * pricePerKM;
+      totalPrice =
+        fixPrice + ((totalDistance - baseDistance) / 1000) * pricePerKM; //divide by 1000 to convert to km
     }
 
     return totalPrice;
@@ -257,7 +258,7 @@ export async function deletePricing({ id }: { id: number }): Promise<void> {
  * @param {number} [params.organizationId] - The ID of the organization.
  * @param {number} [params.itemId] - The ID of the item.
  * @param {string} [params.zone] - The zone of the pricing.
- * @param {number} [params.baseDistanceInKM] - The base distance in kilometers.
+ * @param {number} [params.baseDistance] - The base distance in kilometers.
  * @param {number} [params.pricePerKM] - The price per kilometer.
  * @param {number} [params.fixPrice] - The fixed price.
  * @return {Promise<void>} A promise that resolves when the pricing is updated.
@@ -267,7 +268,7 @@ export async function updatePricing({
   id,
   organizationId,
   itemId,
-  baseDistanceInKM,
+  baseDistance,
   pricePerKM,
   zone,
   fixPrice,
@@ -276,7 +277,7 @@ export async function updatePricing({
   organizationId?: number;
   itemId?: number;
   zone?: string;
-  baseDistanceInKM?: number;
+  baseDistance?: number;
   pricePerKM?: number;
   fixPrice?: number;
 }): Promise<void> {
@@ -298,7 +299,7 @@ export async function updatePricing({
       data: {
         organizationId,
         itemId,
-        baseDistanceInKM,
+        baseDistance,
         pricePerKM,
         zone,
         fixPrice,

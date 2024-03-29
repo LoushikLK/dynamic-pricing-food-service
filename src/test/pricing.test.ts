@@ -19,9 +19,9 @@ describe("Pricing Controller", () => {
 
   it("should create a price with name using POST /api/v1/price", async () => {
     const data = {
-      organizationId: 3,
-      itemId: 12,
-      baseDistanceInKM: 10,
+      organizationId: 1,
+      itemId: 1,
+      baseDistance: 10,
       pricePerKM: 10,
       zone: "test",
       fixPrice: 10,
@@ -37,7 +37,7 @@ describe("Pricing Controller", () => {
     const data = {
       organizationId: 100,
       itemId: 100,
-      baseDistanceInKM: 10,
+      baseDistance: 10,
       pricePerKM: 10,
       zone: "test",
       fixPrice: 10,
@@ -49,7 +49,7 @@ describe("Pricing Controller", () => {
   });
   it("should update an price and return with message price updated PATCH /api/v1/price/:id", async () => {
     const data = {
-      baseDistanceInKM: 15,
+      baseDistance: 15,
       pricePerKM: 12,
       zone: "test updated",
     };
@@ -63,7 +63,7 @@ describe("Pricing Controller", () => {
     expect(response.status).toBe(200);
     expect(response.body.success).toBe(true);
     expect(response.body.data.data.zone).toBe("test updated");
-    expect(response.body.data.data.baseDistanceInKM).toBe(15);
+    expect(response.body.data.data.baseDistance).toBe(15);
     expect(response.body.data.data.pricePerKM).toBe(12);
   });
   it("should return an array of object of data with status 200 GET /api/v1/price", async () => {

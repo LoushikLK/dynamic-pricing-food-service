@@ -28,7 +28,7 @@ CREATE TABLE "Pricing" (
     "organizationId" INTEGER NOT NULL,
     "itemId" INTEGER NOT NULL,
     "zone" TEXT NOT NULL,
-    "baseDistanceInKM" INTEGER NOT NULL,
+    "baseDistance" INTEGER NOT NULL,
     "pricePerKM" INTEGER NOT NULL,
     "fixPrice" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

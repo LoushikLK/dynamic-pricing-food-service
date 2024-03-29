@@ -57,7 +57,7 @@ export async function findOrganizationByName({
           select: {
             zone: true,
             pricePerKM: true,
-            baseDistanceInKM: true,
+            baseDistance: true,
             fixPrice: true,
             item: {
               select: {
@@ -94,7 +94,7 @@ export async function findOrganizationById(id: number): Promise<object> {
           select: {
             zone: true,
             pricePerKM: true,
-            baseDistanceInKM: true,
+            baseDistance: true,
             fixPrice: true,
             item: {
               select: {
@@ -167,7 +167,7 @@ export async function getOrganizations({
             select: {
               zone: true,
               pricePerKM: true,
-              baseDistanceInKM: true,
+              baseDistance: true,
               fixPrice: true,
               item: {
                 select: {
